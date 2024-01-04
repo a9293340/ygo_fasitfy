@@ -5,19 +5,30 @@ import fastify, {
 } from 'fastify';
 import connectDB from './config/db.config';
 import rateLimit from '@fastify/rate-limit';
+import Redis from 'ioredis';
+import registerRoutes from './routes/index';
 
 const app: FastifyInstance = fastify({
   logger: {
     level: 'debug',
     stream: {
       write: msg => {
-        // 紀錄日誌
-        console.log(msg);
+        const logger = JSON.parse(msg);
+        // 紀錄日誌 level msg time pid hostname
+        console.log(logger);
       },
     },
   },
   bodyLimit: 10485760,
 });
+// 建立緩存 (windows & macOs沒有)
+let redis: Redis | null;
+
+try {
+  redis = new Redis(); // 连接到默认的 Redis 设置
+} catch (error) {
+  console.log('無法連接到redis:', error);
+}
 
 const startServer = async () => {
   // Connect DB
@@ -58,6 +69,9 @@ const startServer = async () => {
   );
 
   //全局middleware
+
+  // routes引入
+  registerRoutes(app, redis);
 
   // Run Server
   await app.listen({ port: 3300, host: '0.0.0.0' });
