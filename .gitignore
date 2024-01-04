@@ -1,4 +1,4 @@
 .env
-yarn.lock
 .vscode
+yarn.lock
 node_modules
