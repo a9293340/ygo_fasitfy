@@ -6,7 +6,7 @@ import Redis from 'ioredis';
  * @param app Fastify 應用實例。
  * @param redis Redis 客户端實例。
  */
-export default function commonRoutes(
+export default async function commonRoutes(
   app: FastifyInstance,
   redis: Redis
-): void {}
+): Promise<void> {}

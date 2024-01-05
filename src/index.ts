@@ -71,7 +71,7 @@ const startServer = async () => {
   //全局middleware
 
   // routes引入
-  registerRoutes(app, redis);
+  await registerRoutes(app, redis);
 
   // Run Server
   await app.listen({ port: 3300, host: '0.0.0.0' });
