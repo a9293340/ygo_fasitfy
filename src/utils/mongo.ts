@@ -21,10 +21,8 @@ export const findInDatabase = <T>(
   projection?: Record<string, any>
 ): Promise<T[]> => model.find(filter, projection, options).exec();
 
-export const createDocument = <T extends Document>(
-  model: Model<T>,
-  doc: T
-): Promise<T> => model.create(doc);
+export const createDocument = <T>(model: Model<T>, doc: T): Promise<T> =>
+  model.create(doc);
 
 export const updateOneDocument = <T>(
   model: Model<T>,

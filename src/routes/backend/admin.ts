@@ -1,17 +1,7 @@
 import { FastifyInstance } from 'fastify';
-import { common200Schema, commonDataSchema } from '../../utils/common';
+import { common200Schema, commonDataSchema } from '@/utils/common';
 import { routeLogin } from './admin/login';
-
-interface IAdmin {
-  type: any;
-  name: any;
-  create_date: any;
-  photo: any;
-  status: any;
-  account: any;
-  password: any;
-  email: any;
-}
+import { preRouteLogout, routeLogout } from './admin/logout';
 
 export default async function adminRoute(app: FastifyInstance, options: any) {
   // Login
@@ -25,5 +15,19 @@ export default async function adminRoute(app: FastifyInstance, options: any) {
       },
     },
     handler: routeLogin,
+  });
+
+  // Logout
+  app.route({
+    method: 'POST',
+    url: '/logout',
+    schema: {
+      body: commonDataSchema,
+      response: {
+        200: common200Schema,
+      },
+    },
+    handler: routeLogout,
+    preHandler: preRouteLogout,
   });
 }

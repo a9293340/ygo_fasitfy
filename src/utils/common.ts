@@ -5,7 +5,7 @@ import { FastifyReply } from 'fastify';
 import { v4 } from 'uuid';
 import BackendToken from '../models/frontend_token.model';
 import FrontendToken from '../models/frontend_token.model';
-import { deleteOneDocument, findInDatabase } from './mongo';
+import { createDocument, deleteOneDocument } from './mongo';
 dotenv.config();
 
 export const commonDataSchema = S.object().prop('data', S.string().required());
@@ -114,7 +114,7 @@ export const makeToken = async (
   const model = type === 'b' ? BackendToken : FrontendToken;
   if (removeToken) await deleteOneDocument(model, { tokenReq });
   const date = new Date();
-  await findInDatabase(model, { token, tokenReq, date });
+  await createDocument(model, { token, tokenReq, date });
 
   return encode({ token, date });
 };

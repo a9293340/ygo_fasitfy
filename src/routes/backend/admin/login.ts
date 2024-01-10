@@ -1,8 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { decode, makeToken, replyError } from '../../../utils/common';
-import { findInDatabase } from '../../../utils/mongo';
-import Admin from '../../../models/admin.model';
-import BackendToken from '../../../models/frontend_token.model';
+import { decode, makeToken, replyError } from '@/utils/common';
+import { findInDatabase } from '@/utils/mongo';
+import Admin from '@/models/admin.model';
+import BackendToken from '@/models/frontend_token.model';
 
 interface LoginBody {
   account: string;

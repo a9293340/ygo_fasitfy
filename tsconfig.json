@@ -12,8 +12,12 @@
     "sourceMap": true,
     "outDir": "build",
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src/**/*", "typings/*.d.ts", "src/index.ts"],
+  "include": ["src/**/*", "typings/**/*"],
   "exclude": ["node_modules", "src/**/*.spec.ts"]
 }
