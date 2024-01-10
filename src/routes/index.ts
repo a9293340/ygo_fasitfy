@@ -1,15 +1,20 @@
 import { FastifyInstance } from 'fastify';
-import Redis from 'ioredis';
-
-import frontendRoutes from './frontend/index';
 import backendRoutes from './backend/index';
-import commonRoutes from './common/index';
+import { findInDatabase } from '../utils/mongo';
+import Admin from '../models/admin.model';
 
 export default async function registerRoutes(
   app: FastifyInstance,
-  redis: Redis
+  options: any
 ): Promise<void> {
-  await frontendRoutes(app, redis);
-  await backendRoutes(app, redis);
-  await commonRoutes(app, redis);
+  app.register(backendRoutes);
+
+  app.route({
+    method: 'GET',
+    url: '/test',
+    handler: async (request, reply) => {
+      const a = await findInDatabase(Admin, {}, { limit: 1 });
+      reply.send(`test!${a}`);
+    },
+  });
 }

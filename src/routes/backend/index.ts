@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import Redis from 'ioredis';
+import adminRouter from './admin';
 
 /**
  * 注册後台路由的函数。
@@ -8,5 +8,7 @@ import Redis from 'ioredis';
  */
 export default async function frontendRoutes(
   app: FastifyInstance,
-  redis: Redis
-): Promise<void> {}
+  options: any
+): Promise<void> {
+  app.register(adminRouter, { prefix: '/admin' });
+}

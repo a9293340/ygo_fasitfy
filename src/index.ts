@@ -15,7 +15,7 @@ const app: FastifyInstance = fastify({
       write: msg => {
         const logger = JSON.parse(msg);
         // 紀錄日誌 level msg time pid hostname
-        console.log(logger);
+        // console.log(logger);
       },
     },
   },
@@ -26,6 +26,7 @@ let redis: Redis | null;
 
 try {
   redis = new Redis(); // 连接到默认的 Redis 设置
+  app.decorate('redis', redis);
 } catch (error) {
   console.log('無法連接到redis:', error);
 }
@@ -71,7 +72,7 @@ const startServer = async () => {
   //全局middleware
 
   // routes引入
-  await registerRoutes(app, redis);
+  app.register(registerRoutes, { prefix: '/api', redis });
 
   // Run Server
   await app.listen({ port: 3300, host: '0.0.0.0' });

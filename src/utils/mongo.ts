@@ -17,7 +17,7 @@ interface OperationResult {
 export const findInDatabase = <T>(
   model: Model<T>,
   filter: FilterQuery<T>,
-  options: QueryOptions,
+  options?: QueryOptions,
   projection?: Record<string, any>
 ): Promise<T[]> => model.find(filter, projection, options).exec();
 
