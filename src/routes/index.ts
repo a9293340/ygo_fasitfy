@@ -1,7 +1,5 @@
 import { FastifyInstance } from 'fastify';
 import backendRoutes from './backend/index';
-import { findInDatabase } from '../utils/mongo';
-import Admin from '../models/admin.model';
 
 export default async function registerRoutes(
   app: FastifyInstance,
@@ -9,12 +7,12 @@ export default async function registerRoutes(
 ): Promise<void> {
   app.register(backendRoutes);
 
+  // 測試route
   app.route({
     method: 'GET',
     url: '/test',
     handler: async (request, reply) => {
-      const a = await findInDatabase(Admin, {}, { limit: 1 });
-      reply.send(`test!${a}`);
+      reply.send(`test!`);
     },
   });
 }
